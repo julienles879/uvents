@@ -18,7 +18,7 @@ jobs:
           echo "ISSUE_NUMBER=$ISSUE_NUMBER" >> $GITHUB_ENV
           echo "Detected issue number: $ISSUE_NUMBER"
 
-      - name: Get issue node_id
+      - name: Get GitHub node_id of the issue
         if: env.ISSUE_NUMBER != ''
         id: get_node
         env:
@@ -31,12 +31,13 @@ jobs:
               }
             }' -F owner="julienles879" -F repo="uvents" -F number="$ISSUE_NUMBER" --jq '.data.repository.issue.id')
           echo "NODE_ID=$NODE_ID" >> $GITHUB_ENV
+          echo "Found node_id: $NODE_ID"
 
-      - name: Move issue to In Progress
+      - name: Move issue to In Progress in project
         if: env.NODE_ID != ''
         uses: actions/add-to-project@v0.5.0
         with:
           project-url: https://github.com/users/julienles879/projects/1
           github-token: ${{ secrets.PROJECT_TOKEN }}
           item-id: ${{ env.NODE_ID }}
-          status: "In progress"
+          status: "In Progress"

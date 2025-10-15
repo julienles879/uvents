@@ -30,7 +30,7 @@ jobs:
             }' -F owner="julienles879" -F repo="uvents" -F number="$ISSUE_NUMBER" --jq '.data.repository.issue.id')
           echo "NODE_ID=$NODE_ID" >> $GITHUB_ENV
 
-      - name: Move issue to In Review
+      - name: Move issue to In review
         if: env.NODE_ID != ''
         uses: actions/add-to-project@v0.5.0
         with:
