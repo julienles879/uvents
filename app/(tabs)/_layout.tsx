@@ -38,6 +38,9 @@ export default function TabLayout() {
           default: {},
         }),
       }}>
+
+      {/* Il faudra change les trucs ici */}
+
       <Tabs.Screen
         name="(home)/index"
         options={{
