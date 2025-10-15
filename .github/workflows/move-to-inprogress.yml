@@ -1,4 +1,4 @@
-name: Move Issue to In Progress
+name: Move Issue to In Progress (on branch creation)
 
 on:
   create:
@@ -10,9 +10,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Move linked issue to "In progress"
+      - name: Extract issue number from branch name
+        id: extract
+        run: |
+          BRANCH_NAME=${GITHUB_REF#refs/heads/}
+          ISSUE_NUMBER=$(echo "$BRANCH_NAME" | grep -oE '#[0-9]+' | tr -d '#')
+          echo "ISSUE_NUMBER=$ISSUE_NUMBER" >> $GITHUB_ENV
+          echo "Detected issue number: $ISSUE_NUMBER"
+
+      - name: Move linked issue to 'In progress'
+        if: env.ISSUE_NUMBER != ''
         uses: actions/add-to-project@v0.5.0
         with:
           project-url: https://github.com/users/julienles879/projects/1
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.PROJECT_TOKEN }}
+          item-id: ${{ env.ISSUE_NUMBER }}
           status: "In progress"
