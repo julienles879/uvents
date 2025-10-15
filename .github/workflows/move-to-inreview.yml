@@ -1,0 +1,40 @@
+name: Move Issue to In Review (on PR open)
+
+on:
+  pull_request:
+    types: [opened, ready_for_review]
+
+jobs:
+  move-issue:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Extract issue number from PR body
+        id: extract
+        run: |
+          ISSUE_NUMBER=$(echo "${{ github.event.pull_request.body }}" | grep -oE '#[0-9]+' | tr -d '#')
+          echo "ISSUE_NUMBER=$ISSUE_NUMBER" >> $GITHUB_ENV
+          echo "Detected issue number: $ISSUE_NUMBER"
+
+      - name: Get issue node_id
+        if: env.ISSUE_NUMBER != ''
+        id: get_node
+        env:
+          GH_TOKEN: ${{ secrets.PROJECT_TOKEN }}
+        run: |
+          NODE_ID=$(gh api graphql -f query='
+            query($owner:String!, $repo:String!, $number:Int!) {
+              repository(owner:$owner, name:$repo) {
+                issue(number:$number) { id }
+              }
+            }' -F owner="julienles879" -F repo="uvents" -F number="$ISSUE_NUMBER" --jq '.data.repository.issue.id')
+          echo "NODE_ID=$NODE_ID" >> $GITHUB_ENV
+
+      - name: Move issue to In Review
+        if: env.NODE_ID != ''
+        uses: actions/add-to-project@v0.5.0
+        with:
+          project-url: https://github.com/users/julienles879/projects/1
+          github-token: ${{ secrets.PROJECT_TOKEN }}
+          item-id: ${{ env.NODE_ID }}
+          status: "In review"
