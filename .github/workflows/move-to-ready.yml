@@ -1,0 +1,18 @@
+name: Move Issue to Ready (after merge to dev)
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  move-issue:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Move linked issues to "Ready"
+        uses: actions/add-to-project@v0.5.0
+        with:
+          project-url: https://github.com/users/julienles879/projects/1
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          status: "Ready"
