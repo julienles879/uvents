@@ -28,6 +28,6 @@ jobs:
         uses: actions/add-to-project@v0.5.0
         with:
           project-url: https://github.com/users/julienles879/projects/1
-          github-token: ${{ secrets.PROJECT_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           item-id: ${{ env.NODE_ID }}
           field-Status: "In review"
