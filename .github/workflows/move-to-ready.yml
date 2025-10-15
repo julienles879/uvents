@@ -14,4 +14,4 @@ jobs:
         with:
           project-url: https://github.com/users/julienles879/projects/1
           github-token: ${{ secrets.PROJECT_TOKEN }}
-          status: "Ready"
+          field-Status: "Ready"

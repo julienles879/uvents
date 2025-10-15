@@ -33,4 +33,4 @@ jobs:
           project-url: https://github.com/users/julienles879/projects/1
           github-token: ${{ secrets.PROJECT_TOKEN }}
           item-id: ${{ env.NODE_ID }}
-          status: "In Progress"
+          field-Status: "In Progress"
