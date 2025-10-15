@@ -8,9 +8,8 @@ on:
 jobs:
   move-issue:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Move linked issues to 'Done'
+      - name: Move linked issues to Done
         uses: actions/add-to-project@v0.5.0
         with:
           project-url: https://github.com/users/julienles879/projects/1

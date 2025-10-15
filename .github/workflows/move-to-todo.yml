@@ -1,17 +1,17 @@
-name: Move Issue to Ready (after merge to dev)
+name: Add new issues to Project (Todo)
 
 on:
-  push:
-    branches:
-      - dev
+  issues:
+    types: [opened]
 
 jobs:
-  move-issue:
+  add-to-project:
     runs-on: ubuntu-latest
     steps:
-      - name: Move linked issues to Ready
+      - name: Add issue to project with status Todo
         uses: actions/add-to-project@v0.5.0
         with:
           project-url: https://github.com/users/julienles879/projects/1
           github-token: ${{ secrets.PROJECT_TOKEN }}
-          status: "Ready"
+          item-id: ${{ github.event.issue.node_id }}
+          status: "Todo"

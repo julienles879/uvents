@@ -7,27 +7,20 @@ on:
 jobs:
   move-issue:
     runs-on: ubuntu-latest
-
     steps:
       - name: Extract issue number from PR body
         id: extract
         run: |
           ISSUE_NUMBER=$(echo "${{ github.event.pull_request.body }}" | grep -oE '#[0-9]+' | tr -d '#')
           echo "ISSUE_NUMBER=$ISSUE_NUMBER" >> $GITHUB_ENV
-          echo "Detected issue number: $ISSUE_NUMBER"
 
       - name: Get issue node_id
         if: env.ISSUE_NUMBER != ''
-        id: get_node
-        env:
-          GH_TOKEN: ${{ secrets.PROJECT_TOKEN }}
         run: |
           NODE_ID=$(gh api graphql -f query='
-            query($owner:String!, $repo:String!, $number:Int!) {
-              repository(owner:$owner, name:$repo) {
-                issue(number:$number) { id }
-              }
-            }' -F owner="julienles879" -F repo="uvents" -F number="$ISSUE_NUMBER" --jq '.data.repository.issue.id')
+            query($o:String!,$r:String!,$n:Int!){
+              repository(owner:$o,name:$r){issue(number:$n){id}}
+            }' -F o="julienles879" -F r="uvents" -F n="$ISSUE_NUMBER" --jq '.data.repository.issue.id')
           echo "NODE_ID=$NODE_ID" >> $GITHUB_ENV
 
       - name: Move issue to In review
