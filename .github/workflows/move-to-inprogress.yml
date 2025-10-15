@@ -28,9 +28,9 @@ jobs:
 
       - name: Move issue to In Progress
         if: env.NODE_ID != ''
-        uses: actions/add-to-project@v0.5.0
+        uses: actions/add-to-project@v0.4.0
         with:
-          project-url: https://github.com/users/julienles879/projects/1
+          project-url: https://github.com/users/julienles879/projects/PVT_kwHOCKuDWM4BFmcx
           github-token: ${{ secrets.GITHUB_TOKEN }}
           item-id: ${{ env.NODE_ID }}
           field-Status: "In Progress"
