@@ -15,9 +15,12 @@ import "react-native-reanimated";
 import Auth from "@/components/Auth";
 import SplashScreen from "@/components/SplashScreen";
 import { useColorScheme } from "@/hooks/useColorScheme";
+import { usePermissions } from "@/hooks/usePermissions";
 
 export default function RootLayout() {
+  const permissions = usePermissions();
   const colorScheme = useColorScheme();
+  
   const [loaded] = useFonts({
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
   });
@@ -62,17 +65,30 @@ export default function RootLayout() {
 
   if (!loaded) return null;
 
-  return (
-    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <View style={{ flex: 1 }}>
-        {showSplash && (
+  // If any permission is null, keep showing splash screen
+  const permissionsLoading =
+    permissions.camera === null ||
+    permissions.location === null ||
+    permissions.contacts === null;
+
+  if (showSplash || permissionsLoading) {
+    return (
+      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+        <View style={{ flex: 1 }}>
           <Animated.View
             style={[StyleSheet.absoluteFill, { opacity: fadeAnim, zIndex: 10 }]}
           >
             <SplashScreen scaleAnim={scaleAnim} />
           </Animated.View>
-        )}
+        </View>
+        <StatusBar style="auto" />
+      </ThemeProvider>
+    );
+  }
 
+  return (
+    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+      <View style={{ flex: 1 }}>
         {session?.user ? (
           <Auth />
         ) : (
