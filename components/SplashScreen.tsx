@@ -1,15 +1,18 @@
 import React from "react";
-import { Image } from 'expo-image';
-import { View, ActivityIndicator, StyleSheet } from "react-native";
+import { View, ActivityIndicator, StyleSheet, Animated } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 
-export default function SplashScreen() {
+type SplashScreenProps = {
+    scaleAnim?: Animated.Value;
+};
+
+export default function SplashScreen({ scaleAnim }: SplashScreenProps) {
     return (
         <View style={styles.container}>
-        <Image 
+        <Animated.Image 
             source={require("../assets/images/logo1.png")}
-            style={styles.logo}
-            contentFit="contain"
+            style={[styles.logo, { transform: [{ scale: scaleAnim || 1 }] }]}
+            resizeMode="contain"
         />
         <ThemedText type="title">Chargement...</ThemedText>
         <ActivityIndicator size="large" color="#00AEEF" />

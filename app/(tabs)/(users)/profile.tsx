@@ -3,6 +3,7 @@ import { Link } from 'expo-router';
 import { Image } from 'expo-image';
 import { StyleSheet, View, Pressable, Text } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { supabase } from '@/lib/supabase';
 
 export default function ProfileScreen() {
     return (
@@ -84,6 +85,17 @@ export default function ProfileScreen() {
                             <Text style={styles.buttonText}>Modifier mon profil</Text>
                             </Pressable>
                         </Link>
+                    </View>
+
+                    <View>
+                        <Pressable
+                            style={styles.button}
+                            onPress={async () => {
+                                await supabase.auth.signOut();
+                            }}
+                        >
+                            <Text style={styles.buttonText}>Se déconnecter</Text>
+                        </Pressable>
                     </View>
                 </View>
             </SafeAreaView>
