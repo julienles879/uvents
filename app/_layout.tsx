@@ -18,9 +18,9 @@ import { useColorScheme } from "@/hooks/useColorScheme";
 import { usePermissions } from "@/hooks/usePermissions";
 
 export default function RootLayout() {
-  const permissions = usePermissions();
   const colorScheme = useColorScheme();
-  
+  const { permissions } = usePermissions();
+
   const [loaded] = useFonts({
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
   });
@@ -65,11 +65,11 @@ export default function RootLayout() {
 
   if (!loaded) return null;
 
-  // If any permission is null, keep showing splash screen
   const permissionsLoading =
     permissions.camera === null ||
     permissions.location === null ||
-    permissions.contacts === null;
+    permissions.contacts === null ||
+    permissions.notifications === null;
 
   if (showSplash || permissionsLoading) {
     return (
