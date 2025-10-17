@@ -90,12 +90,12 @@ export default function RootLayout() {
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       <View style={{ flex: 1 }}>
         {session?.user ? (
-          <Auth />
-        ) : (
           <Stack>
             <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
             <Stack.Screen name="+not-found" />
           </Stack>
+        ) : (
+          <Auth />
         )}
       </View>
       <StatusBar style="auto" />

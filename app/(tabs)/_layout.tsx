@@ -1,6 +1,6 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
-import { Platform } from 'react-native';
+import { View } from 'react-native';
 
 import { HapticTab } from '@/components/HapticTab';
 import { IconSymbol } from '@/components/ui/IconSymbol';
@@ -18,46 +18,136 @@ export default function TabLayout() {
         headerShown: false,
         tabBarButton: HapticTab,
         tabBarBackground: TabBarBackground,
-        tabBarStyle: Platform.select({
-          ios: {
-            position: 'absolute',
-          },
-          default: {},
-        }),
+        tabBarShowLabel: false,
+        tabBarStyle: {
+          position: 'fixed',
+          left: 20,
+          right: 20,
+          elevation: 5,
+          backgroundColor: Colors[colorScheme ?? 'light'].background,
+          borderRadius: 25,
+          height: 70,
+          shadowColor: '#000',
+          shadowOpacity: 0.1,
+          shadowOffset: { width: 0, height: 5 },
+          shadowRadius: 8,
+          borderTopWidth: 0,
+        },
+        tabBarLabelStyle: { fontSize: 12, fontWeight: '600', marginBottom: 5 },
       }}>
       <Tabs.Screen
         name="(home)/index"
         options={{
           title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          tabBarIcon: ({ color, focused }) => (
+            <View
+              style={{
+                backgroundColor: focused
+                  ? Colors[colorScheme ?? 'light'].tint
+                  : 'transparent',
+                borderRadius: 15,
+                padding: 8,
+              }}
+            >
+              <IconSymbol
+                size={focused ? 30 : 26}
+                name="house.fill"
+                color={focused ? '#fff' : color}
+              />
+            </View>
+          ),
         }}
       />
       <Tabs.Screen
         name="(events)"
         options={{
           title: 'Events',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="plus.circle.fill" color={color} />,
+          tabBarIcon: ({ color, focused }) => (
+            <View
+              style={{
+                backgroundColor: focused
+                  ? Colors[colorScheme ?? 'light'].tint
+                  : 'transparent',
+                borderRadius: 15,
+                padding: 8,
+              }}
+            >
+              <IconSymbol
+                size={focused ? 30 : 26}
+                name="plus.circle.fill"
+                color={focused ? '#fff' : color}
+              />
+            </View>
+          ),
         }}
       />
       <Tabs.Screen
         name="explore"
         options={{
           title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="map.fill" color={color} />,
+          tabBarIcon: ({ color, focused }) => (
+            <View
+              style={{
+                backgroundColor: focused
+                  ? Colors[colorScheme ?? 'light'].tint
+                  : 'transparent',
+                borderRadius: 15,
+                padding: 8,
+              }}
+            >
+              <IconSymbol
+                size={focused ? 30 : 26}
+                name="map.fill"
+                color={focused ? '#fff' : color}
+              />
+            </View>
+          ),
         }}
       />
       <Tabs.Screen
         name="tickets"
         options={{
           title: 'Tickets',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="ticket.fill" color={color} />,
+          tabBarIcon: ({ color, focused }) => (
+            <View
+              style={{
+                backgroundColor: focused
+                  ? Colors[colorScheme ?? 'light'].tint
+                  : 'transparent',
+                borderRadius: 15,
+                padding: 8,
+              }}
+            >
+              <IconSymbol
+                size={focused ? 30 : 26}
+                name="ticket.fill"
+                color={focused ? '#fff' : color}
+              />
+            </View>
+          ),
         }}
       />
       <Tabs.Screen
         name="(users)"
         options={{
           title: 'User',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="person.fill" color={color} />,
+          tabBarIcon: ({ color, focused }) => (
+            <View
+              style={{
+                backgroundColor: focused
+                  ? Colors[colorScheme ?? 'light'].tint
+                  : 'transparent',
+                borderRadius: 15,
+                padding: 8,
+              }}
+            >
+              <IconSymbol
+                size={focused ? 30 : 26}
+                name="person.fill"
+                color={focused ? '#fff' : color}
+              />
+            </View>
+          ),
         }}
       />
     </Tabs>
